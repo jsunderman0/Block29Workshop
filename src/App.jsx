@@ -22,7 +22,7 @@ const Puppy = ({puppies}) => {
   const params = useParams()
   const potato = params.potato*1
   const puppy = puppies.find(puppy => puppy.id === potato)
-  console.log(puppies)
+
 
   if(!puppy){
     return null
@@ -37,6 +37,63 @@ const Puppy = ({puppies}) => {
     </>
   }
 
+}
+
+const AddPuppyForm = () => {
+  const [newPuppy, setNewPuppy] = useState("")
+  const [newPuppyBreed, setNewPuppyBreed] = useState("")
+  const [newPuppyStatus, setNewPuppyStatus] = useState("")
+  const [newPuppyImage, setNewPuppyImage] = useState("")
+  async function handleSubmit (e) {
+    e.preventDefault()
+    const {data} = await axios.post('https://fsa-puppy-bowl.herokuapp.com/api/2307/players', {newPuppy, newPuppyBreed, newPuppyStatus, newPuppyImage})
+    console.log(data)
+
+  }
+  return (
+    <>
+    <h1> Add a Puppy: </h1>
+    <form onSubmit={handleSubmit}>
+    <label>
+      <input 
+      value={newPuppy}
+      type="text"
+      name="newPuppy"
+      placeholder="Enter Puppy's Name"
+      onChange={(e) => setNewPuppy(e.target.value)}
+      />
+    </label>
+    <label>
+      <input 
+      value={newPuppyBreed}
+      type="text"
+      name="newPuppyBreed"
+      placeholder="Enter Puppy's Breed"
+      onChange={(e) => setNewPuppyBreed(e.target.value)}
+      />
+    </label>
+    <label>
+      <input 
+      value={newPuppyStatus}
+      type="text"
+      name="newPuppyStatus"
+      placeholder="Enter Puppy's Status"
+      onChange={(e) => setNewPuppyStatus(e.target.value)}
+      />
+    </label>
+    <label>
+      <input 
+      value={newPuppyImage}
+      type="text"
+      name="newPuppyImage"
+      placeholder="Enter Puppy's Image URL"
+      onChange={(e) => setNewPuppyImage(e.target.value)}
+      />
+    </label>
+    <button type="submit">Submit</button>
+    </form>
+    </>
+  )
 }
 
 
@@ -60,11 +117,13 @@ function App() {
      <nav> 
       <h3> <Link to ='/'> Home </Link></h3>
       <h3> <Link to ='/puppies'> Puppies </Link></h3>
+      <h3> <Link to ='/addPuppy'> Add a Puppy </Link></h3>
      </nav>
      <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/puppies' element={<Puppies puppies = {puppies}/>}/>
       <Route path='/puppies/:potato' element={<Puppy puppies = {puppies}/>}/>
+      <Route path='/addPuppy' element={<AddPuppyForm/>}/>
      </Routes>
      
     </>
