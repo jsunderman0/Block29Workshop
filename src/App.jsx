@@ -20,16 +20,23 @@ const Puppies = ({puppies}) => {
 
 const Puppy = ({puppies}) => {
   const params = useParams()
-  const id = params*1
-  const puppy = puppies.find(puppy => puppy.id =id)
-  return (
-    <>
-    <h1> This is the puppy you selected:</h1>
-    <h2> {puppy.name} </h2>
-    
+  const potato = params.potato*1
+  const puppy = puppies.find(puppy => puppy.id === potato)
+  console.log(puppies)
 
+  if(!puppy){
+    return null
+  }
+  else{
+  return <>
+  <h1> You Selected: {puppy.name} </h1>
+    <ul>
+      <li> Breed: {puppy.breed} </li>
+      <li><img src={puppy.imageUrl}/></li>
+    </ul>
     </>
-  )
+  }
+
 }
 
 
@@ -57,7 +64,7 @@ function App() {
      <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/puppies' element={<Puppies puppies = {puppies}/>}/>
-      <Route path='/puppies/:id' element={<Puppy puppies = {puppies}/>}/>
+      <Route path='/puppies/:potato' element={<Puppy puppies = {puppies}/>}/>
      </Routes>
      
     </>
